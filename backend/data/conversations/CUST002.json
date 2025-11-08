@@ -1,0 +1,190 @@
+[
+  {
+    "date": "2024-11-01T16:30:00Z",
+    "userMessage": "Hi Priya, garden ka kya update hai?",
+    "aiResponse": "Hello Amit Sir! Garden area mein landscaping ka kaam start ho gaya hai. Grass lagane ka kaam next week hoga. Aapki wife ko bahut pasand aayega!",
+    "context": {
+      "topic": "garden_landscaping",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [
+        "grass_installation_next_week"
+      ]
+    }
+  },
+  {
+    "date": "2024-11-02T17:00:00Z",
+    "userMessage": "Kids play area ready hai?",
+    "aiResponse": "Yes! Play area almost ready hai. Swings aur slides install ho gaye hain. Safety flooring ka kaam chal raha hai. Bacche bahut enjoy karenge!",
+    "context": {
+      "topic": "play_area",
+      "sentiment": "excited",
+      "concerns": [],
+      "nextSteps": [
+        "safety_flooring_in_progress"
+      ]
+    }
+  },
+  {
+    "date": "2024-11-03T16:45:00Z",
+    "userMessage": "Diwali pe site visit kar sakte hain?",
+    "aiResponse": "Bilkul! Diwali pe special arrangement hai. Pooja bhi hogi site pe. Aap family ke saath aaiye. 11 baje se event hai.",
+    "context": {
+      "topic": "diwali_visit",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [
+        "diwali_site_visit_confirmed"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:35:14.472Z",
+    "userMessage": "",
+    "aiResponse": "Hello Amit Sharma Sir! Kaise hain aap? Main Riverwood se call kar rahi hoon. Aapke ghar ki construction mein aaj bahut acchi progress hui hai. Share karu details?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor slab work in progress"
+    }
+  },
+  {
+    "date": "2025-11-07T20:35:42.133Z",
+    "userMessage": "हाँ, डिटेल्स शेयर करो।",
+    "aiResponse": "Namaste! Main Priya hoon Riverwood se. Main aapki help karne ke liye hoon. Aap construction update, payment details, ya site visit ke baare mein pooch sakte hain. Kya jaanna chahte hain?",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:36:09.318Z",
+    "userMessage": "क्या अपडेट्स हैं?",
+    "aiResponse": "Namaste! Main Priya hoon Riverwood se. Main aapki help karne ke liye hoon. Aap construction update, payment details, ya site visit ke baare mein pooch sakte hain. Kya jaanna chahte hain?",
+    "context": {
+      "topic": "plumbing_&_electrical",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:51:24.273Z",
+    "userMessage": "",
+    "aiResponse": "Namaste Amit Sharma ji! Good morning! Main Priya bol rahi hoon Riverwood se. Aaj aapke Villa-5 ke liye ek exciting update hai! Sunna chahenge?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor walls construction started"
+    }
+  },
+  {
+    "date": "2025-11-07T20:51:42.578Z",
+    "userMessage": "haan bataiye",
+    "aiResponse": "Ji, main sun rahi hoon. Aap construction update, site visit, payment details, ya koi bhi sawaal pooch sakte hain. Main yahan hoon aapki help karne ke liye!",
+    "context": {
+      "topic": "plastering_&_finishing",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:28:45.999Z",
+    "userMessage": "",
+    "aiResponse": "Namaste! Chai pi li? Aaj weather bhi accha tha toh full speed mein kaam hua. 60% complete ho gaya overall. Great progress!",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Bedroom flooring in progress"
+    }
+  },
+  {
+    "date": "2025-11-07T21:29:17.430Z",
+    "userMessage": "मुझे पेमेंट के बारे में बता दीजिए, आगे कितनी पेमेंट करनी है?",
+    "aiResponse": "Haan ji, aapki next installment 15th December ko due hai, ₹5 lakh ki. Maine aapko email bhi bhej diya hai details ke saath. Finance team se baat karni hai aapko?\n",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "payment",
+        "meeting"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:29:44.589Z",
+    "userMessage": "मुझे एक और चाहिए थी गुड़गांव में। क्या आप मुझे उसके बारे में बता सकती हैं?",
+    "aiResponse": "Arey Amit ji! Gurgaon mein bhi aapko property chahiye? Bilkul, main aapko Gurgaon projects ke baare mein bhi bata sakti hu. Kya dekh rahe hain aap - plots, villas, ya apartments? Us hisab se main aapko options bhejti hu.\n",
+    "context": {
+      "topic": "foundation_work",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": []
+    }
+  },
+  {
+    "date": "2025-11-07T21:30:25.712Z",
+    "userMessage": "मुझे गेटेड सोसाइटी में अपार्टमेंट चाहिए।",
+    "aiResponse": "Namaste Amit ji! Main samajh gayi, aapko gated society mein apartment chahiye. Filhaal toh Villa-5 ka foundation work chal raha hai - 83% complete ho gaya hai! Ground floor construction bhi next week se shuru ho jayega. Aapko construction update ke baare mein aur jaanna hai ya phir gated society ke apartments ke baare mein baat karein?\n",
+    "context": {
+      "topic": "foundation_work",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "meeting",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:47:46.116Z",
+    "userMessage": "",
+    "aiResponse": "Namaste Amit Sharma ji! Main Priya bol rahi hoon Riverwood Real Estate se. Main kis prakar se aapki sahayata kar sakti hoon? Aapke Villa-5 ki construction update chahiye ya koi aur jaankari?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Living room flooring completed"
+    }
+  },
+  {
+    "date": "2025-11-07T21:48:20.295Z",
+    "userMessage": "अपडेट चाहिए।",
+    "aiResponse": "Namaste ji! Main Priya bol rahi hoon Riverwood Real Estate se. Villa-5 ka update chahiye aapko? Ground floor structure 60% complete ho gaya hai, aur overall progress 65% hai. Kaam thoda aage chal raha hai!\n",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "follow_up"
+      ]
+    }
+  }
+]

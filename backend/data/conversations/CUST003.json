@@ -1,0 +1,97 @@
+[
+  {
+    "date": "2024-11-01T14:00:00Z",
+    "userMessage": "Next payment kab hai?",
+    "aiResponse": "Next installment 15th November ko due hai. Amount Rs. 5 lakhs hai. Online payment ka option available hai. Koi issue ho toh batayiye.",
+    "context": {
+      "topic": "payment_schedule",
+      "sentiment": "neutral",
+      "concerns": [
+        "payment_due"
+      ],
+      "nextSteps": [
+        "payment_by_15th_november"
+      ]
+    }
+  },
+  {
+    "date": "2024-11-02T14:30:00Z",
+    "userMessage": "Interior work ka budget kya hoga?",
+    "aiResponse": "Interior work ke liye estimated budget Rs. 8-10 lakhs hai for your flat size. Cost-effective options bhi available hain. Interior designer se meeting arrange kar sakti hoon.",
+    "context": {
+      "topic": "interior_budget",
+      "sentiment": "concerned",
+      "concerns": [
+        "interior_cost"
+      ],
+      "nextSteps": [
+        "interior_designer_meeting"
+      ]
+    }
+  },
+  {
+    "date": "2024-11-03T13:45:00Z",
+    "userMessage": "Can I get payment extension?",
+    "aiResponse": "Yes, extension possible hai. 7 days ka grace period automatically hai. Zyada extension chahiye toh finance team se baat karni hogi. Main arrange kar dungi.",
+    "context": {
+      "topic": "payment_extension",
+      "sentiment": "concerned",
+      "concerns": [
+        "payment_flexibility"
+      ],
+      "nextSteps": [
+        "finance_team_discussion"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:12:04.793Z",
+    "userMessage": "",
+    "aiResponse": "Good morning Priya Verma! This is Priya from Riverwood. I have some great news about your B-805. The construction work is going really well today. Shall I share the update?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Internal plastering work started"
+    }
+  },
+  {
+    "date": "2025-11-07T21:12:31.288Z",
+    "userMessage": "येस प्लीज़ शेयर।",
+    "aiResponse": "Namaste Priya Verma ji! Main Priya, Riverwood Real Estate se. Kaise hain aap? Aasha karti hoon sab theek hoga. Aaj aapke ghar ke construction ke baare mein kuch exciting updates hain!\n",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:12:56.886Z",
+    "userMessage": "अपडेट्स बताइए?",
+    "aiResponse": "Namaste Priya ji! Main Priya, Riverwood Real Estate se. Kaisa chal raha hai aapka din? Aaj aapke ghar ke flooring work ka update hai, bahut hi badhiya progress ho rahi hai!\n",
+    "context": {
+      "topic": "flooring_work",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:13:25.966Z",
+    "userMessage": "फ्लोरिंग वर्क में क्या?",
+    "aiResponse": "Namaste Priya ji! Main Priya, Riverwood Real Estate se. Kaise hain aap? I hope you are doing well. Aaj toh aapke plot B-805 par ground floor ke pillars khade ho gaye hain! 63% kaam ho gaya hai. \n",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": []
+    }
+  }
+]

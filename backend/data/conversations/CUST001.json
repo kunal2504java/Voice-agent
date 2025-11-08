@@ -1,0 +1,610 @@
+[
+  {
+    "date": "2024-11-01T10:30:00Z",
+    "userMessage": "Hello, kya update hai?",
+    "aiResponse": "Namaste Rajesh ji! Aaj ka update bahut accha hai. Ground floor ka slab work complete ho gaya hai. 65% progress ho gayi hai overall.",
+    "context": {
+      "topic": "construction_progress",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": []
+    }
+  },
+  {
+    "date": "2024-11-02T11:00:00Z",
+    "userMessage": "Bathroom tiles ka kya scene hai?",
+    "aiResponse": "Bathroom tiles ke liye aapne jo Italian marble select kiya tha, wo aa gaya hai site pe. Quality bahut acchi hai. Next week installation start hoga.",
+    "context": {
+      "topic": "bathroom_tiles",
+      "sentiment": "inquiry",
+      "concerns": [
+        "tile_quality"
+      ],
+      "nextSteps": [
+        "tile_installation_next_week"
+      ]
+    }
+  },
+  {
+    "date": "2024-11-03T10:15:00Z",
+    "userMessage": "When can I visit the site?",
+    "aiResponse": "Aap is weekend visit kar sakte hain. Saturday morning 10 baje best time hai. Main site engineer ko inform kar dungi. Aap Priya ji ko bhi saath la sakte hain.",
+    "context": {
+      "topic": "site_visit",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [
+        "weekend_site_visit_planned"
+      ]
+    }
+  },
+  {
+    "date": "2024-11-04T09:45:00Z",
+    "userMessage": "Plumbing work kaisa chal raha hai?",
+    "aiResponse": "Plumbing work bilkul schedule pe hai. Hot water pipes install ho gaye hain. Cold water connection bhi ready hai. Quality check bhi pass ho gaya.",
+    "context": {
+      "topic": "plumbing_work",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": []
+    }
+  },
+  {
+    "date": "2025-11-07T17:56:51.561Z",
+    "userMessage": "",
+    "aiResponse": "Hello Rajesh Kumar Sir! Kaise hain aap? Main Riverwood se call kar rahi hoon. Aapke ghar ki construction mein aaj bahut acchi progress hui hai. Share karu details?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Quality check passed for foundation"
+    }
+  },
+  {
+    "date": "2025-11-07T18:00:46.779Z",
+    "userMessage": "",
+    "aiResponse": "Hi Rajesh Kumar ji! Hope aap theek hain. Aaj Ground Floor Construction mein kamaal ka kaam hua hai. Aapko zaroor pasand aayega ye update!",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor pillars erected"
+    }
+  },
+  {
+    "date": "2025-11-07T18:01:05.834Z",
+    "userMessage": "हैलो क्या अपडेट्स आगे की?",
+    "aiResponse": "Namaste! Main Priya hoon Riverwood se. Main aapki help karne ke liye hoon. Aap construction update, payment details, ya site visit ke baare mein pooch sakte hain. Kya jaanna chahte hain?",
+    "context": {
+      "topic": "plumbing_&_electrical",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T18:04:19.471Z",
+    "userMessage": "",
+    "aiResponse": "Hi Rajesh Kumar ji! Hope aap theek hain. Aaj Ground Floor Construction mein kamaal ka kaam hua hai. Aapko zaroor pasand aayega ye update!",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor walls construction started"
+    }
+  },
+  {
+    "date": "2025-11-07T18:04:37.173Z",
+    "userMessage": "हैलो क्या आप डेटा कंस्ट्रक्शन की?",
+    "aiResponse": "Namaste! Main Priya hoon Riverwood se. Main aapki help karne ke liye hoon. Aap construction update, payment details, ya site visit ke baare mein pooch sakte hain. Kya jaanna chahte hain?",
+    "context": {
+      "topic": "foundation_work",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T18:05:32.396Z",
+    "userMessage": "",
+    "aiResponse": "Namaste! Rajesh Kumar ji, chai pi li? Main Priya hoon Riverwood se. Aaj site pe 32 workers the aur bahut accha kaam hua hai. Batau kya hua?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "External plastering 50% complete"
+    }
+  },
+  {
+    "date": "2025-11-07T18:06:01.473Z",
+    "userMessage": "हैलो।",
+    "aiResponse": "Namaste! Main Priya hoon Riverwood se. Main aapki help karne ke liye hoon. Aap construction update, payment details, ya site visit ke baare mein pooch sakte hain. Kya jaanna chahte hain?",
+    "context": {
+      "topic": "foundation_work",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:30:18.063Z",
+    "userMessage": "",
+    "aiResponse": "Namaste! Rajesh Kumar ji, chai pi li? Main Priya hoon Riverwood se. Aaj site pe 16 workers the aur bahut accha kaam hua hai. Batau kya hua?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor pillars erected"
+    }
+  },
+  {
+    "date": "2025-11-07T20:30:32.391Z",
+    "userMessage": "हैलो।",
+    "aiResponse": "Namaste! Main Priya hoon Riverwood se. Main aapki help karne ke liye hoon. Aap construction update, payment details, ya site visit ke baare mein pooch sakte hain. Kya jaanna chahte hain?",
+    "context": {
+      "topic": "foundation_work",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:30:45.166Z",
+    "userMessage": "कंस्ट्रक्शन की क्या अपडेट है?",
+    "aiResponse": "Namaste! Main Priya hoon Riverwood se. Main aapki help karne ke liye hoon. Aap construction update, payment details, ya site visit ke baare mein pooch sakte hain. Kya jaanna chahte hain?",
+    "context": {
+      "topic": "flooring_work",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:42:56.786Z",
+    "userMessage": "",
+    "aiResponse": "Namaste! Rajesh Kumar ji, chai pi li? Main Priya hoon Riverwood se. Aaj site pe 29 workers the aur bahut accha kaam hua hai. Batau kya hua?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Water supply lines connected"
+    }
+  },
+  {
+    "date": "2025-11-07T20:44:01.931Z",
+    "userMessage": "",
+    "aiResponse": "Hello Rajesh Kumar Sir! Kaise hain aap? Main Riverwood se call kar rahi hoon. Aapke ghar ki construction mein aaj bahut acchi progress hui hai. Share karu details?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor walls construction started"
+    }
+  },
+  {
+    "date": "2025-11-07T20:45:18.323Z",
+    "userMessage": "",
+    "aiResponse": "Hello Rajesh Kumar Sir! Kaise hain aap? Main Riverwood se call kar rahi hoon. Aapke ghar ki construction mein aaj bahut acchi progress hui hai. Share karu details?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "External plastering 50% complete"
+    }
+  },
+  {
+    "date": "2025-11-07T20:45:43.978Z",
+    "userMessage": "haan",
+    "aiResponse": "Ji, main sun rahi hoon. Aap construction update, site visit, payment details, ya koi bhi sawaal pooch sakte hain. Main yahan hoon aapki help karne ke liye!",
+    "context": {
+      "topic": "plumbing_&_electrical",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:49:27.613Z",
+    "userMessage": "Hello",
+    "aiResponse": "Namaste! Kaise hain aap? Aaj aapke ghar ki construction mein bahut acchi progress hui hai! Batau kya hua aaj?",
+    "context": {
+      "topic": "plastering_&_finishing",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": []
+    }
+  },
+  {
+    "date": "2025-11-07T20:50:41.440Z",
+    "userMessage": "",
+    "aiResponse": "Hello Rajesh Kumar Sir! Kaise hain aap? Main Riverwood se call kar rahi hoon. Aapke ghar ki construction mein aaj bahut acchi progress hui hai. Share karu details?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor walls construction started"
+    }
+  },
+  {
+    "date": "2025-11-07T20:51:05.621Z",
+    "userMessage": "Hello",
+    "aiResponse": "Namaste! Kaise hain aap? Aaj aapke ghar ki construction mein bahut acchi progress hui hai! Batau kya hua aaj?",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": []
+    }
+  },
+  {
+    "date": "2025-11-07T20:55:48.187Z",
+    "userMessage": "",
+    "aiResponse": "Namaste! Rajesh Kumar ji, chai pi li? Main Priya hoon Riverwood se. Aaj site pe 25 workers the aur bahut accha kaam hua hai. Batau kya hua?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Electrical wiring installation started"
+    }
+  },
+  {
+    "date": "2025-11-07T20:56:08.018Z",
+    "userMessage": "Jii , Bataiye",
+    "aiResponse": "Ji, main sun rahi hoon. Aap construction update, site visit, payment details, ya koi bhi sawaal pooch sakte hain. Main yahan hoon aapki help karne ke liye!",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:56:28.345Z",
+    "userMessage": "payment details",
+    "aiResponse": "Bilkul! Aaj foundation ka kaam 85% complete ho gaya hai. Engineers ne quality check bhi kar liya - sab perfect hai! Plumbing ka kaam bhi start ho gaya hai. Agle hafte tak poora foundation ready ho jayega. Aapko koi specific cheez dekhni hai site pe?",
+    "context": {
+      "topic": "payment",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "inspection"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:56:52.604Z",
+    "userMessage": "haan",
+    "aiResponse": "Ji, main sun rahi hoon. Aap construction update, site visit, payment details, ya koi bhi sawaal pooch sakte hain. Main yahan hoon aapki help karne ke liye!",
+    "context": {
+      "topic": "ground_floor_construction",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit",
+        "payment",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T20:59:07.815Z",
+    "userMessage": "",
+    "aiResponse": "Hi Rajesh Kumar ji! Hope aap theek hain. Aaj Ground Floor Construction mein kamaal ka kaam hua hai. Aapko zaroor pasand aayega ye update!",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor structure 60% complete"
+    }
+  },
+  {
+    "date": "2025-11-07T21:03:10.744Z",
+    "userMessage": "",
+    "aiResponse": "Namaste Rajesh Kumar ji! Good morning! Main Priya bol rahi hoon Riverwood se. Aaj aapke A-1204 ke liye ek exciting update hai! Sunna chahenge?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Electrical panel boxes installed"
+    }
+  },
+  {
+    "date": "2025-11-07T21:07:27.172Z",
+    "userMessage": "",
+    "aiResponse": "Namaste Rajesh Kumar ji! Good morning! Main Priya bol rahi hoon Riverwood se. Aaj aapke A-1204 ke liye ek exciting update hai! Sunna chahenge?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ceiling work in progress"
+    }
+  },
+  {
+    "date": "2025-11-07T21:07:53.667Z",
+    "userMessage": "जी अपडेट बताइए क्या है?",
+    "aiResponse": "Namaste Rajesh Kumar ji! Main Priya bol rahi hoon Riverwood Real Estate se. Kaise hain aap? Chai-wai ho gayi? Aaj main aapko aapke plot A-1204, project RW001 ki construction update dene ke liye call kiya hai. Bahut acchi news hai! Wall finishing touches ho rahe hain.\n",
+    "context": {
+      "topic": "plastering_&_finishing",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:08:48.181Z",
+    "userMessage": "घर कब तक कंप्लीट हो जाएगा?",
+    "aiResponse": "Namaste Rajesh Kumar ji! Main Priya bol rahi hoon Riverwood Real Estate se. Kaise hain aap? Umeed hai sab theek hoga. Aaj toh aapke ghar ki taraf se bahut hi shubh samachar hai! Ghar kab tak complete hoga yeh aap pooch rahe hain, toh bata du ki kaam bilkul time pe chal raha hai, balki slightly ahead bhi hai. Expected completion June 2025 hai. Aur Priya ji aur bacchon ke liye sab perfect hoga! Don't worry, main aapko updates deti rahungi.\n",
+    "context": {
+      "topic": "flooring_work",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:16:14.868Z",
+    "userMessage": "",
+    "aiResponse": "Good morning! Aaj aapke ghar ki construction mein bahut acchi news hai. Flooring Work ka kaam on track chal raha hai!",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Kitchen tiles installation started"
+    }
+  },
+  {
+    "date": "2025-11-07T21:23:34.670Z",
+    "userMessage": "",
+    "aiResponse": "Good morning! Aaj aapke ghar ki construction mein bahut acchi news hai. Ground Floor Construction ka kaam on track chal raha hai!",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor walls construction started"
+    }
+  },
+  {
+    "date": "2025-11-07T21:23:58.416Z",
+    "userMessage": "क्या प्रोग्रेस हो गई है?",
+    "aiResponse": "Namaste Rajesh ji! Plumbing pipes lagane ka kaam 83% complete ho gaya hai, aur plastering ka kaam jald hi shuru hoga. 21 workers site par hain aur kaam time se aage chal raha hai! Photos dekhna chahoge?\n",
+    "context": {
+      "topic": "plumbing_&_electrical",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:24:37.329Z",
+    "userMessage": "फोटोज आप मेरे नंबर पे भेज दीजिए।",
+    "aiResponse": "Namaste Rajesh ji! Kya haal hai? Foundation ka kaam toh ekdum mast chal raha hai, 89% complete ho gaya hai! Quality check bhi clear ho gaya.\n\n(Thinks: User asked for general update -> Answered directly with update details -> Offering next step is relevant)\n",
+    "context": {
+      "topic": "foundation_work",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "inspection",
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:25:12.528Z",
+    "userMessage": "अभी और कितनी कॉस्ट आएगी?",
+    "aiResponse": "Rajesh ji, aapki aakhri installment ₹7 lakhs ki March 1st ko due hai. Maine aapko email par pura break-up bhi bhej diya hai. Finance team se baat karani hai kya?\n",
+    "context": {
+      "topic": "flooring_work",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "payment",
+        "meeting"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:25:42.355Z",
+    "userMessage": "फाइनांस टीम मेरी बात करा दीजिए।",
+    "aiResponse": "Zaroor, Rajesh ji! Main abhi finance team se aapki baat karati hoon. Unse aap payment ke baare mein jo bhi sawaal hai, pooch sakte hain.\n",
+    "context": {
+      "topic": "plastering_&_finishing",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": [
+        "payment",
+        "meeting"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:41:53.304Z",
+    "userMessage": "",
+    "aiResponse": "Hello! Good morning! Aapke plot ki construction mein aaj exciting progress hui hai. Ground floor walls construction started Sunna chahenge details?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor walls construction started"
+    }
+  },
+  {
+    "date": "2025-11-07T21:44:45.179Z",
+    "userMessage": "",
+    "aiResponse": "Namaste ji! Good morning! Main Priya hoon Riverwood Real Estate se. Aaj main aapko A-1204 ki construction update dene ke liye call kar rahi hoon. Kya aap update sunna chahenge?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Bedroom flooring in progress"
+    }
+  },
+  {
+    "date": "2025-11-07T21:45:11.169Z",
+    "userMessage": "जी बताइए?",
+    "aiResponse": "Namaste Rajesh ji! Kaise hain aap? Aaj main aapko ek bahut acchi update dene aayi hoon aapke plot A-1204 ke baare mein.\n",
+    "context": {
+      "topic": "plastering_&_finishing",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "follow_up"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T21:45:38.982Z",
+    "userMessage": "अपडेट बताइए?",
+    "aiResponse": "Namaste Rajesh ji! Electrical wiring ka installation shuru ho gaya hai, aur 69% progress ho chuki hai. Sab time pe chal raha hai! Aur plastering bhi jald hi shuru hoga. Kuch photos dekhna chahenge?\n",
+    "context": {
+      "topic": "plumbing_&_electrical",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": [
+        "site_visit"
+      ]
+    }
+  },
+  {
+    "date": "2025-11-07T22:34:29.350Z",
+    "userMessage": "",
+    "aiResponse": "Namaste ji! Good morning! Main Priya hoon Riverwood Real Estate se. Aaj main aapko A-1204 ki construction update dene ke liye call kar rahi hoon. Kya aap update sunna chahenge?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Kitchen tiles installation started"
+    }
+  },
+  {
+    "date": "2025-11-07T22:36:18.714Z",
+    "userMessage": "",
+    "aiResponse": "Namaste ji! Good morning! Main Priya hoon Riverwood Real Estate se. Aaj main aapko A-1204 ki construction update dene ke liye call kar rahi hoon. Kya aap update sunna chahenge?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Ground floor slab work in progress"
+    }
+  },
+  {
+    "date": "2025-11-07T22:36:43.927Z",
+    "userMessage": "yes , please tell the updates",
+    "aiResponse": "Foundation ka concrete pouring shuru ho gaya hai, Rajesh ji! 83% complete ho gaya hai. Agle hafte ground floor ka kaam shuru hoga.\n",
+    "context": {
+      "topic": "construction_progress",
+      "sentiment": "neutral",
+      "concerns": [],
+      "nextSteps": []
+    }
+  },
+  {
+    "date": "2025-11-07T22:47:18.629Z",
+    "userMessage": "",
+    "aiResponse": "Hello Rajesh Kumar ji! Main Priya, Riverwood Real Estate se baat kar rahi hoon. Aapke ghar ki construction ke baare mein update share karne ke liye call kiya hai. Main aapki kaise madad kar sakti hoon?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Kitchen tiles installation started"
+    }
+  },
+  {
+    "date": "2025-11-07T22:47:54.806Z",
+    "userMessage": "मुझे अपने घर के बारे में डिटेल्स चाहिए। उसका काम कहाँ तक पहुंचा है?",
+    "aiResponse": "Bedroom flooring ka kaam chal raha hai, Rajesh ji! 84% complete ho gaya hai. Do hafte mein painting shuru ho jaega.\n",
+    "context": {
+      "topic": "flooring_work",
+      "sentiment": "inquiry",
+      "concerns": [],
+      "nextSteps": []
+    }
+  },
+  {
+    "date": "2025-11-07T22:52:34.305Z",
+    "userMessage": "",
+    "aiResponse": "Hello Rajesh Kumar ji! Main Priya, Riverwood Real Estate se baat kar rahi hoon. Aapke ghar ki construction ke baare mein update share karne ke liye call kiya hai. Main aapki kaise madad kar sakti hoon?",
+    "context": {
+      "topic": "greeting",
+      "sentiment": "positive",
+      "concerns": [],
+      "nextSteps": [],
+      "type": "greeting",
+      "constructionUpdate": "Kitchen tiles installation started"
+    }
+  }
+]
