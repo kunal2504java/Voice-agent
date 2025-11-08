@@ -1,9 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Phone, PhoneOff, Mic, MicOff, Send, Trash2, History as HistoryIcon, User, Volume2, Loader } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
+import { Phone, PhoneOff, Mic, MicOff, Send, User, Volume2, Loader, Building2, MessageCircle, Sparkles } from 'lucide-react';
 import ConstructionUpdate from './components/ConstructionUpdate';
 import VoiceWaveform from './components/VoiceWaveform';
-import ConversationHistory from './components/ConversationHistory';
 import { sendMessage, getGreeting, synthesizeSpeech, getAllCustomers } from './services/api';
+
+// Memoized Message Component for performance
+const ChatMessage = memo(({ message, isSpeaking }) => (
+  <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} mb-4 animate-fadeIn`}>
+    <div className={`max-w-[75%] ${message.role === 'user' ? 'order-2' : 'order-1'}`}>
+      <div className={`flex items-start gap-3 ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+        {/* Avatar */}
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-md ${
+          message.role === 'user' 
+            ? 'bg-gradient-to-br from-blue-500 to-blue-600' 
+            : 'bg-gradient-to-br from-emerald-500 to-emerald-600'
+        }`}>
+          {message.role === 'user' ? (
+            <User className="w-5 h-5 text-white" />
+          ) : (
+            <MessageCircle className="w-5 h-5 text-white" />
+          )}
+        </div>
+        
+        {/* Message Bubble */}
+        <div className={`rounded-2xl px-5 py-3 shadow-sm ${
+          message.role === 'user'
+            ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'
+            : 'bg-white border border-gray-200 text-gray-800'
+        }`}>
+          <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+          <span className="text-xs opacity-70 mt-1 block">
+            {new Date(message.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+));
+
+ChatMessage.displayName = 'ChatMessage';
 
 function App() {
   // State management
@@ -16,9 +51,6 @@ function App() {
   const [isSending, setIsSending] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [constructionUpdate, setConstructionUpdate] = useState(null);
-  const [conversationHistory, setConversationHistory] = useState([]);
-  const [showHistorySidebar, setShowHistorySidebar] = useState(true);
-  const [spokenText, setSpokenText] = useState('');
   
   const messagesEndRef = useRef(null);
   const audioRef = useRef(null);
@@ -34,9 +66,9 @@ function App() {
     scrollToBottom();
   }, [messages]);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   const loadCustomers = async () => {
     try {
@@ -56,19 +88,16 @@ function App() {
       recognitionRef.current = new SpeechRecognition();
       recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
-      recognitionRef.current.lang = 'hi-IN'; // Hindi + English
+      recognitionRef.current.lang = 'hi-IN';
 
       recognitionRef.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        setSpokenText(transcript);
         setInputMessage(transcript);
         setIsListening(false);
-        // Auto-send after speech recognition
-        setTimeout(() => handleSendMessage(transcript), 500);
+        setTimeout(() => handleSendMessage(transcript), 300);
       };
 
-      recognitionRef.current.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
+      recognitionRef.current.onerror = () => {
         setIsListening(false);
       };
 
@@ -79,37 +108,27 @@ function App() {
   };
 
   const handleStartCall = async () => {
-    if (!selectedCustomer) {
-      alert('Please select a customer first');
-      return;
-    }
-
+    if (!selectedCustomer) return;
+    
+    setIsCallActive(true);
+    setMessages([]);
+    
     try {
-      setIsSending(true);
-      setIsCallActive(true);
-      
       const response = await getGreeting(selectedCustomer.customerId);
-
-      const greetingMessage = {
+      const aiMessage = {
         role: 'assistant',
         content: response.greeting,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
-
-      setMessages([greetingMessage]);
       
-      if (response.constructionUpdate) {
-        setConstructionUpdate(response.constructionUpdate);
-      }
-
-      // Auto-play greeting
+      setMessages([aiMessage]);
+      setConstructionUpdate(response.constructionUpdate);
+      
+      // Play greeting
       await playAudio(response.greeting);
     } catch (error) {
       console.error('Failed to start call:', error);
-      alert('Failed to start call. Please check if the backend is running.');
       setIsCallActive(false);
-    } finally {
-      setIsSending(false);
     }
   };
 
@@ -117,72 +136,68 @@ function App() {
     setIsCallActive(false);
     setMessages([]);
     setConstructionUpdate(null);
-    setSpokenText('');
     if (audioRef.current) {
       audioRef.current.pause();
-      setIsSpeaking(false);
     }
-  };
-
-  const handleStartListening = () => {
-    if (!recognitionRef.current) {
-      alert('Speech recognition not supported in your browser. Please use Chrome or Edge.');
-      return;
-    }
-
-    if (isListening) {
+    if (recognitionRef.current && isListening) {
       recognitionRef.current.stop();
-    } else {
-      setSpokenText('');
-      recognitionRef.current.start();
-      setIsListening(true);
     }
+    setIsListening(false);
+    setIsSpeaking(false);
   };
 
-  const handleSendMessage = async (message) => {
-    if (!message.trim() || !selectedCustomer || !isCallActive) return;
+  const handleSendMessage = async (messageText = inputMessage) => {
+    if (!messageText.trim() || !selectedCustomer || isSending) return;
 
     const userMessage = {
       role: 'user',
-      content: message,
-      timestamp: new Date().toISOString(),
+      content: messageText,
+      timestamp: new Date().toISOString()
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
-    setSpokenText('');
     setIsSending(true);
 
     try {
       const response = await sendMessage(
         selectedCustomer.customerId,
-        message
+        messageText
       );
 
-      const assistantMessage = {
+      const aiMessage = {
         role: 'assistant',
         content: response.response,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString()
       };
 
-      setMessages((prev) => [...prev, assistantMessage]);
-
+      setMessages(prev => [...prev, aiMessage]);
+      
       if (response.constructionUpdate) {
         setConstructionUpdate(response.constructionUpdate);
       }
 
-      // Auto-play response
       await playAudio(response.response);
     } catch (error) {
       console.error('Failed to send message:', error);
-      const errorMessage = {
-        role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again.',
-        timestamp: new Date().toISOString(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsSending(false);
+    }
+  };
+
+  const toggleListening = () => {
+    if (!recognitionRef.current) return;
+
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch (error) {
+        console.error('Failed to start recognition:', error);
+      }
     }
   };
 
@@ -193,9 +208,7 @@ function App() {
       try {
         const response = await synthesizeSpeech(text);
         
-        // Check if response indicates to use browser TTS
-        if (response && typeof response === 'object' && response.useBrowserTTS) {
-          console.log('Using browser TTS fallback');
+        if (response.useBrowserTTS) {
           useBrowserTTS(text);
           return;
         }
@@ -226,15 +239,13 @@ function App() {
 
   const useBrowserTTS = (text) => {
     if ('speechSynthesis' in window) {
-      // Cancel any ongoing speech
       window.speechSynthesis.cancel();
       
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'hi-IN'; // Hindi
-      utterance.rate = 0.9; // Slightly slower for clarity
-      utterance.pitch = 1.1; // Slightly higher for female voice
+      utterance.lang = 'hi-IN';
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
       
-      // Try to find a female Hindi voice
       const voices = window.speechSynthesis.getVoices();
       const hindiVoice = voices.find(voice => 
         voice.lang.startsWith('hi') && voice.name.toLowerCase().includes('female')
@@ -244,218 +255,179 @@ function App() {
         utterance.voice = hindiVoice;
       }
       
-      utterance.onend = () => {
-        setIsSpeaking(false);
-      };
-      
-      utterance.onerror = () => {
-        setIsSpeaking(false);
-      };
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
       
       window.speechSynthesis.speak(utterance);
     } else {
-      console.error('Browser TTS not supported');
       setIsSpeaking(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-amber-50">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-emerald-800 to-emerald-700 shadow-lg border-b-4 border-amber-600">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      {/* Modern Header */}
+      <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-500 rounded-lg shadow-md">
-                <Phone className="w-6 h-6 text-white" />
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-xl blur opacity-75"></div>
+                <div className="relative p-2.5 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-xl">
+                  <Building2 className="w-6 h-6 text-white" />
+                </div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">Riverwood AI Voice Agent</h1>
-                <p className="text-sm text-emerald-100">Daily Construction Updates in Hinglish</p>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+                  Riverwood AI Assistant
+                </h1>
+                <p className="text-sm text-gray-500">Smart Construction Updates</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setShowHistorySidebar(!showHistorySidebar)}
-                className="p-2 text-white hover:bg-emerald-600 rounded-lg transition-colors"
-                title="Toggle History"
-              >
-                <HistoryIcon className="w-5 h-5" />
-              </button>
-              {isCallActive && (
-                <div className="flex items-center gap-2 px-4 py-2 bg-red-500 rounded-lg animate-pulse">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                  <span className="text-white text-sm font-semibold">LIVE</span>
-                </div>
-              )}
-            </div>
+            
+            {isCallActive && (
+              <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 rounded-full shadow-lg animate-pulse">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+                <span className="text-white text-sm font-semibold">LIVE</span>
+              </div>
+            )}
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Sidebar - Customer & Controls */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Customer Selector */}
-            <div className="bg-white rounded-xl shadow-lg p-6 border-2 border-emerald-100">
-              <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <User className="w-5 h-5 text-emerald-600" />
+          
+          {/* Left Panel - Customer Selection & Controls */}
+          <div className="lg:col-span-3 space-y-4">
+            
+            {/* Customer Card */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <User className="w-4 h-4" />
                 Select Customer
-              </h2>
-              
+              </h3>
               <select
                 value={selectedCustomer?.customerId || ''}
                 onChange={(e) => {
                   const customer = customers.find(c => c.customerId === e.target.value);
                   setSelectedCustomer(customer);
-                  handleEndCall(); // End call when switching customers
                 }}
+                className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
                 disabled={isCallActive}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
-                {customers.map((customer) => (
+                {customers.map(customer => (
                   <option key={customer.customerId} value={customer.customerId}>
-                    {customer.name} - {customer.plotNumber}
+                    {customer.name}
                   </option>
                 ))}
               </select>
-
+              
               {selectedCustomer && (
-                <div className="mt-4 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
-                  <p className="text-sm font-semibold text-gray-900">{selectedCustomer.name}</p>
-                  <p className="text-xs text-gray-600 mt-1">Plot: {selectedCustomer.plotNumber}</p>
-                  <p className="text-xs text-gray-600">Project: {selectedCustomer.projectId}</p>
+                <div className="mt-4 p-3 bg-gradient-to-br from-emerald-50 to-blue-50 rounded-xl">
+                  <div className="text-xs text-gray-600 space-y-1.5">
+                    <p className="flex justify-between">
+                      <span className="font-medium">Plot:</span>
+                      <span className="text-gray-800">{selectedCustomer.plotNumber}</span>
+                    </p>
+                    <p className="flex justify-between">
+                      <span className="font-medium">Project:</span>
+                      <span className="text-gray-800">{selectedCustomer.projectId}</span>
+                    </p>
+                  </div>
                 </div>
               )}
+            </div>
 
-              {/* Call Controls */}
-              <div className="mt-6 space-y-3">
-                {!isCallActive ? (
-                  <button
-                    onClick={handleStartCall}
-                    disabled={!selectedCustomer || isSending}
-                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Phone className="w-5 h-5" />
-                    {isSending ? 'Starting Call...' : 'Start Call'}
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleEndCall}
-                    className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg"
-                  >
-                    <PhoneOff className="w-5 h-5" />
-                    End Call
-                  </button>
-                )}
-              </div>
+            {/* Call Controls */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
+              <h3 className="text-sm font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                <Phone className="w-4 h-4" />
+                Call Controls
+              </h3>
+              
+              {!isCallActive ? (
+                <button
+                  onClick={handleStartCall}
+                  disabled={!selectedCustomer}
+                  className="w-full py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  <Phone className="w-5 h-5" />
+                  Start Call
+                </button>
+              ) : (
+                <button
+                  onClick={handleEndCall}
+                  className="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  <PhoneOff className="w-5 h-5" />
+                  End Call
+                </button>
+              )}
             </div>
 
             {/* Construction Update Card */}
             {constructionUpdate && (
-              <ConstructionUpdate update={constructionUpdate} />
+              <div className="animate-fadeIn">
+                <ConstructionUpdate update={constructionUpdate} />
+              </div>
             )}
           </div>
 
-          {/* Main Chat Area */}
-          <div className={`${showHistorySidebar ? 'lg:col-span-6' : 'lg:col-span-9'}`}>
-            <div className="bg-white rounded-xl shadow-lg h-[calc(100vh-12rem)] flex flex-col border-2 border-emerald-100">
+          {/* Center Panel - Chat Interface */}
+          <div className="lg:col-span-9">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 h-[calc(100vh-200px)] flex flex-col">
+              
               {/* Chat Header */}
-              <div className="px-6 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-t-xl border-b-4 border-amber-500">
-                <h3 className="text-lg font-bold text-white">
-                  {isCallActive ? 'Active Conversation' : 'Ready to Start Call'}
-                </h3>
-                {isCallActive && selectedCustomer && (
-                  <p className="text-sm text-emerald-100 mt-1">
-                    Speaking with {selectedCustomer.name}
-                  </p>
-                )}
-              </div>
-
-              {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-white to-emerald-50">
-                {!isCallActive ? (
-                  <div className="h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <Phone className="w-16 h-16 text-emerald-300 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        Welcome to Riverwood Voice Agent
-                      </h3>
-                      <p className="text-gray-600 mb-4">
-                        Select a customer and click "Start Call" to begin
+              <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white rounded-t-2xl">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center">
+                      <MessageCircle className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="font-semibold text-gray-800">Priya - AI Assistant</h2>
+                      <p className="text-xs text-gray-500">
+                        {isCallActive ? (isSpeaking ? 'Speaking...' : 'Listening...') : 'Ready to assist'}
                       </p>
                     </div>
                   </div>
+                  
+                  {isSpeaking && (
+                    <div className="flex items-center gap-2">
+                      <Volume2 className="w-5 h-5 text-emerald-500 animate-pulse" />
+                      <VoiceWaveform isActive={isSpeaking} />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Messages Area */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-white to-gray-50">
+                {!isCallActive ? (
+                  <div className="h-full flex items-center justify-center">
+                    <div className="text-center space-y-4">
+                      <div className="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-100 to-blue-100 rounded-full flex items-center justify-center">
+                        <Phone className="w-10 h-10 text-emerald-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2">Start a Conversation</h3>
+                        <p className="text-sm text-gray-500 max-w-sm mx-auto">
+                          Select a customer and click "Start Call" to begin the AI-powered voice conversation
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : messages.length === 0 ? (
+                  <div className="h-full flex items-center justify-center">
+                    <Loader className="w-8 h-8 text-emerald-500 animate-spin" />
+                  </div>
                 ) : (
                   <>
-                    {messages.map((message, index) => (
-                      <div
-                        key={index}
-                        className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
-                      >
-                        <div
-                          className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
-                            message.role === 'user' ? 'bg-emerald-100' : 'bg-amber-100'
-                          }`}
-                        >
-                          {message.role === 'user' ? (
-                            <User className="w-5 h-5 text-emerald-700" />
-                          ) : (
-                            <Volume2 className="w-5 h-5 text-amber-700" />
-                          )}
-                        </div>
-                        
-                        <div className={`flex-1 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                          <div
-                            className={`inline-block max-w-[80%] p-4 rounded-2xl shadow-md ${
-                              message.role === 'user'
-                                ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-tr-none'
-                                : 'bg-white text-gray-900 border-2 border-amber-200 rounded-tl-none'
-                            }`}
-                          >
-                            <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
-                            {message.timestamp && (
-                              <p className={`text-xs mt-2 ${message.role === 'user' ? 'text-emerald-100' : 'text-gray-500'}`}>
-                                {new Date(message.timestamp).toLocaleTimeString()}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                    {messages.map((msg, idx) => (
+                      <ChatMessage key={idx} message={msg} isSpeaking={isSpeaking} />
                     ))}
-
-                    {/* Speaking Animation */}
-                    {isSpeaking && (
-                      <div className="flex items-center gap-3">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-amber-100">
-                          <Volume2 className="w-5 h-5 text-amber-700" />
-                        </div>
-                        <div className="flex items-center gap-2 px-4 py-3 bg-white border-2 border-amber-200 rounded-2xl rounded-tl-none">
-                          <span className="text-sm text-gray-700 font-medium">Speaking...</span>
-                          <VoiceWaveform isActive={isSpeaking} />
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Listening Indicator */}
-                    {isListening && (
-                      <div className="flex items-center justify-center gap-3 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
-                        <Mic className="w-5 h-5 text-red-600 animate-pulse" />
-                        <span className="text-sm text-red-700 font-semibold">Listening... Speak now</span>
-                        <VoiceWaveform isActive={isListening} color="red" />
-                      </div>
-                    )}
-
-                    {/* Spoken Text Display */}
-                    {spokenText && !isListening && (
-                      <div className="p-4 bg-emerald-50 border-2 border-emerald-200 rounded-lg">
-                        <p className="text-sm text-gray-600 mb-1">You said:</p>
-                        <p className="text-base text-gray-900 font-medium">{spokenText}</p>
-                      </div>
-                    )}
-
                     <div ref={messagesEndRef} />
                   </>
                 )}
@@ -463,71 +435,54 @@ function App() {
 
               {/* Input Area */}
               {isCallActive && (
-                <div className="border-t-2 border-emerald-100 p-4 bg-white rounded-b-xl">
+                <div className="p-4 border-t border-gray-200 bg-white rounded-b-2xl">
                   <div className="flex items-center gap-3">
-                    {/* Voice Input Button */}
                     <button
-                      onClick={handleStartListening}
+                      onClick={toggleListening}
                       disabled={isSending || isSpeaking}
-                      className={`p-4 rounded-full transition-all duration-300 shadow-lg ${
+                      className={`p-3 rounded-xl transition-all shadow-md ${
                         isListening
-                          ? 'bg-red-500 hover:bg-red-600 animate-pulse'
-                          : 'bg-emerald-600 hover:bg-emerald-700'
+                          ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white animate-pulse'
+                          : 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white hover:shadow-lg'
                       } disabled:opacity-50 disabled:cursor-not-allowed`}
-                      title={isListening ? 'Stop listening' : 'Start voice input'}
                     >
-                      {isListening ? (
-                        <MicOff className="w-6 h-6 text-white" />
-                      ) : (
-                        <Mic className="w-6 h-6 text-white" />
-                      )}
+                      {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
                     </button>
                     
-                    {/* Text Input */}
-                    <div className="flex-1 flex gap-2">
-                      <input
-                        type="text"
-                        value={inputMessage}
-                        onChange={(e) => setInputMessage(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputMessage)}
-                        placeholder="Type your message or use voice..."
-                        disabled={isSending || isListening || isSpeaking}
-                        className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
-                      />
-                      <button
-                        onClick={() => handleSendMessage(inputMessage)}
-                        disabled={!inputMessage.trim() || isSending || isListening || isSpeaking}
-                        className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isSending ? (
-                          <Loader className="w-5 h-5 animate-spin" />
-                        ) : (
-                          <Send className="w-5 h-5" />
-                        )}
-                      </button>
-                    </div>
+                    <input
+                      type="text"
+                      value={inputMessage}
+                      onChange={(e) => setInputMessage(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder="Type your message or use voice..."
+                      disabled={isSending || isSpeaking}
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    />
+                    
+                    <button
+                      onClick={() => handleSendMessage()}
+                      disabled={!inputMessage.trim() || isSending || isSpeaking}
+                      className="p-3 bg-gradient-to-r from-emerald-500 to-blue-500 text-white rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+                    >
+                      {isSending ? (
+                        <Loader className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <Send className="w-5 h-5" />
+                      )}
+                    </button>
                   </div>
+                  
+                  {isListening && (
+                    <p className="text-xs text-center text-emerald-600 mt-2 animate-pulse">
+                      🎤 Listening... Speak now
+                    </p>
+                  )}
                 </div>
               )}
             </div>
           </div>
-
-          {/* Right Sidebar - Conversation History */}
-          {showHistorySidebar && (
-            <div className="lg:col-span-3">
-              <ConversationHistory 
-                customerId={selectedCustomer?.customerId}
-                isCallActive={isCallActive}
-              />
-            </div>
-          )}
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="mt-8 py-4 text-center text-sm text-gray-600 bg-white border-t-2 border-emerald-100">
-        <p>Built with ❤️ for Riverwood Real Estate | Powered by OpenAI & ElevenLabs</p>
-      </footer>
     </div>
   );
 }
